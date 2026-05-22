@@ -2,7 +2,7 @@
 
 A weekly men's workout and devotion community. Where men are forged — in body, in spirit, and in brotherhood.
 
-**Live Site**: https://LukeyCodez.github.io/iron-brotherhood/
+**Live Site**: https://fitnessforjesus.github.io/iron-brotherhood/
 
 ## 📋 Pages
 
