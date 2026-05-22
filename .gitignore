@@ -1,0 +1,21 @@
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Dependencies (if adding Node projects)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build output
+dist/
+build/

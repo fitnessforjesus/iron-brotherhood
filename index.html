@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iron Brotherhood — Weekly Men's Workout & Devotion</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --iron: #111111;
+    --forge: #7a1508;
+    --ember: #C0392B;
+    --ash: #1e1e1e;
+    --smoke: #2a2a2a;
+    --light: #f5f0e8;
+    --muted: rgba(245,240,232,0.6);
+    --faint: rgba(245,240,232,0.25);
+    --gold: #B8960C;
+    --red-line: rgba(192,57,43,0.3);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--iron);
+    color: var(--light);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(17,17,17,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.15em;
+    color: var(--light);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--ember); }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--light); }
+  .nav-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--muted);
+    transition: all 0.2s;
+  }
+  .nav-mobile {
+    display: none;
+    position: fixed;
+    top: 60px; left: 0; right: 0;
+    background: rgba(17,17,17,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 1.5rem 2rem;
+    z-index: 99;
+    list-style: none;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 2rem 100px;
+    position: relative;
+    overflow: hidden;
+    background: #0a0a0a;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,26,10,0.35) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(139,26,10,0.1) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.018) 60px, rgba(255,255,255,0.018) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.018) 60px, rgba(255,255,255,0.018) 61px);
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .emblem {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 2.5rem;
+    animation: fadeIn 1s ease both;
+  }
+  .hero-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.45em;
+    font-size: 12px;
+    color: var(--ember);
+    margin-bottom: 1.25rem;
+    animation: fadeIn 1s ease 0.1s both;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 16vw, 148px);
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+  .hero-title .outline {
+    -webkit-text-stroke: 1.5px rgba(245,240,232,0.35);
+    color: transparent;
+    display: block;
+    font-size: clamp(54px, 10vw, 96px);
+  }
+  .hero-rule {
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ember), transparent);
+    margin: 2rem auto;
+    animation: expandWidth 1s ease 0.5s both;
+  }
+  .hero-sub {
+    font-size: clamp(18px, 2.5vw, 22px);
+    font-style: italic;
+    color: var(--muted);
+    max-width: 460px;
+    margin: 0 auto 2rem;
+    line-height: 1.65;
+    animation: fadeIn 1s ease 0.6s both;
+  }
+  .hero-verse {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    animation: fadeIn 1s ease 0.7s both;
+  }
+  .hero-cta {
+    margin-top: 2.5rem;
+    animation: fadeIn 1s ease 0.85s both;
+  }
+  .btn-primary {
+    display: inline-block;
+    padding: 0.9rem 2.8rem;
+    background: var(--ember);
+    color: var(--light);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--forge); transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-block;
+    padding: 0.9rem 2.8rem;
+    border: 1px solid rgba(245,240,232,0.25);
+    color: var(--muted);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    margin-left: 1rem;
+  }
+  .btn-outline:hover { border-color: var(--light); color: var(--light); transform: translateY(-2px); }
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    animation: fadeIn 1.5s ease 1.2s both;
+  }
+  .scroll-indicator span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--faint);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(180deg, transparent, var(--faint));
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    padding: 100px 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.35em;
+    font-size: 11px;
+    color: var(--ember);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--red-line);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 7vw, 64px);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 2rem;
+  }
+  .about-text {
+    font-size: 19px;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+  .about-text p + p { margin-top: 1.25rem; }
+  .pillars-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .pillar {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+  .pillar-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--ember);
+    line-height: 1;
+    opacity: 0.5;
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .pillar-content {}
+  .pillar-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: var(--light);
+    margin-bottom: 0.35rem;
+  }
+  .pillar-text {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── QUOTE BAND ── */
+  .quote-band {
+    background: var(--ash);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding: 70px 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .quote-band::before {
+    content: '\201C';
+    position: absolute;
+    font-family: 'Crimson Pro', serif;
+    font-size: 300px;
+    color: var(--ember);
+    opacity: 0.06;
+    top: -60px;
+    left: 5%;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .quote-band blockquote {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: clamp(24px, 4vw, 38px);
+    line-height: 1.5;
+    color: var(--light);
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .quote-ref {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.25em;
+    font-size: 13px;
+    color: var(--gold);
+  }
+
+  /* ── SCHEDULE ── */
+  #schedule {
+    padding: 100px 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .schedule-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .sched-card {
+    background: var(--ash);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .sched-card:hover { border-color: rgba(192,57,43,0.4); }
+  .sched-card.featured {
+    border-color: var(--ember);
+    background: linear-gradient(135deg, var(--ash) 0%, rgba(139,26,10,0.15) 100%);
+  }
+  .scard-icon {
+    font-size: 28px;
+    margin-bottom: 1.25rem;
+  }
+  .scard-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--ember);
+    margin-bottom: 0.5rem;
+  }
+  .scard-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.05em;
+    color: var(--light);
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+  }
+  .scard-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── WHAT TO EXPECT ── */
+  #expect {
+    padding: 100px 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .timeline {
+    margin-top: 3rem;
+    position: relative;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(180deg, var(--ember), rgba(192,57,43,0.1));
+  }
+  .tl-item {
+    position: relative;
+    padding: 0 0 2.5rem 2.5rem;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot {
+    position: absolute;
+    left: -5px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--ember);
+    border: 2px solid var(--iron);
+  }
+  .tl-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--ember);
+    margin-bottom: 0.35rem;
+  }
+  .tl-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.05em;
+    color: var(--light);
+    margin-bottom: 0.5rem;
+  }
+  .tl-desc {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 560px;
+  }
+
+  /* ── JOIN ── */
+  #join {
+    padding: 100px 2rem 120px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--iron) 0%, #080808 100%);
+  }
+  #join .section-label { justify-content: center; }
+  #join .section-label::before {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--red-line);
+  }
+  #join .section-label::after { max-width: 60px; }
+  #join .section-title { text-align: center; }
+  .join-body {
+    font-size: 19px;
+    font-style: italic;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+  .join-note {
+    margin-top: 2rem;
+    font-size: 14px;
+    color: var(--faint);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2.5rem 3rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+  .footer-logo span { color: var(--ember); }
+  .footer-verse {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--faint);
+  }
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .footer-links a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes expandWidth {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .schedule-cards { grid-template-columns: 1fr; }
+    .btn-outline { margin-left: 0; margin-top: 0.75rem; display: block; text-align: center; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Iron <span>Brotherhood</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#expect">What to Expect</a></li>
+    <li><a href="calendar.html">Calendar</a></li>
+    <li><a href="contact.html">Questions</a></li>
+    <li><a href="join.html">Join Us</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<ul class="nav-mobile" id="mobileNav">
+  <li><a href="#about" onclick="closeMobileNav()">About</a></li>
+  <li><a href="#schedule" onclick="closeMobileNav()">Schedule</a></li>
+  <li><a href="#expect" onclick="closeMobileNav()">What to Expect</a></li>
+  <li><a href="calendar.html">Calendar</a></li>
+  <li><a href="contact.html">Questions</a></li>
+  <li><a href="join.html">Join Us</a></li>
+</ul>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="emblem">
+      <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="6" width="12" height="60" rx="2" fill="#C0392B" opacity="0.9"/>
+        <rect x="6" y="25" width="60" height="12" rx="2" fill="#C0392B" opacity="0.9"/>
+        <rect x="34" y="10" width="4" height="52" rx="1" fill="#7a1508" opacity="0.7"/>
+        <rect x="10" y="29" width="52" height="4" rx="1" fill="#7a1508" opacity="0.7"/>
+        <circle cx="36" cy="36" r="34" stroke="#C0392B" stroke-width="0.5" opacity="0.2"/>
+      </svg>
+    </div>
+    <p class="hero-eyebrow">Weekly Men's Group</p>
+    <h1 class="hero-title">
+      Iron
+      <span class="outline">Brotherhood</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Where men are forged — in body, in spirit, and in brotherhood.</p>
+    <p class="hero-verse">Proverbs 27:17 &nbsp;·&nbsp; Iron Sharpens Iron</p>
+    <div class="hero-cta">
+      <a class='btn-primary' href='join.html'>Join the Brotherhood</a>
+      <a href="#about" class="btn-outline">Learn More</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">Who We Are</p>
+  <h2 class="section-title">Built for More</h2>
+  <div class="about-layout">
+    <div class="about-text">
+      <p>Iron Brotherhood is a weekly gathering of men committed to sharpening each other — in the weight room and in the Word. We believe real strength isn't just physical.</p>
+      <p>Every week we sweat together, then sit together, digging into what it means to live as men of faith and character. No performance. No pretense. Just iron sharpening iron.</p>
+      <p>This is a place to be challenged, to be known, and to grow into the man you're called to be.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-content">
+          <div class="pillar-title">Workout</div>
+          <div class="pillar-text">Push your limits alongside men who will challenge and carry you. No spectators — everyone works.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-content">
+          <div class="pillar-title">Devotion</div>
+          <div class="pillar-text">A short, honest look at scripture. Real talk for real life. No fluff, no performance.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-content">
+          <div class="pillar-title">Brotherhood</div>
+          <div class="pillar-text">Men you can count on — a place to be known, to be challenged, and to be encouraged.</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">04</div>
+        <div class="pillar-content">
+          <div class="pillar-title">Accountability</div>
+          <div class="pillar-text">We don't grow alone. Iron Brotherhood holds men to who they're becoming, week by week.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE BAND -->
+<div class="quote-band">
+  <blockquote>As iron sharpens iron, so one person sharpens another.</blockquote>
+  <p class="quote-ref">Proverbs 27:17</p>
+</div>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <p class="section-label">When & Where</p>
+  <h2 class="section-title">Show Up</h2>
+  <div class="schedule-cards">
+    <div class="sched-card">
+      <div class="scard-icon">📅</div>
+      <div class="scard-label">Day</div>
+      <div class="scard-value">Every Saturday</div>
+      <div class="scard-desc" style="margin-bottom:0.5rem;">Rain or shine, week after week. Consistency is where transformation lives.</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--ember); letter-spacing:0.08em;">6:00 AM</div>
+    </div>
+    <div class="sched-card featured">
+      <div class="scard-icon">⚡</div>
+      <div class="scard-label">Format</div>
+      <div class="scard-value">Workout<br>then Word</div>
+      <div class="scard-desc">An hour of iron, followed by a short devotion to anchor what we're building in the gym and in life.</div>
+    </div>
+    <div class="sched-card">
+      <div class="scard-icon">📍</div>
+      <div class="scard-label">Location</div>
+      <div class="scard-value">Contact Us for Details</div>
+      <div class="scard-desc">We'll get you the location when you reach out. Always free — just show up.</div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:2.5rem;">
+    <a class='btn-primary' href='calendar.html'>View Full Calendar</a>
+  </div>
+</section>
+
+<!-- WHAT TO EXPECT -->
+<section id="expect">
+  <p class="section-label">The Session</p>
+  <h2 class="section-title">What to Expect</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">Arrive</div>
+      <div class="tl-title">Warm Up & Connect</div>
+      <div class="tl-desc">Show up, meet the men, get loose. No need to know anyone — you'll leave knowing everyone.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">The Grind</div>
+      <div class="tl-title">Group Workout</div>
+      <div class="tl-desc">A challenging, full-body session led by the group. Every fitness level welcome — we scale for anyone. Expect to sweat and to be pushed.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">The Word</div>
+      <div class="tl-title">Short Devotion</div>
+      <div class="tl-desc">We cool down and open the Word together. A passage, a few honest questions, and real conversation. Usually 20–30 minutes. Always worth it.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-time">After</div>
+      <div class="tl-title">Brotherhood</div>
+      <div class="tl-desc">Stick around. The conversations that happen after are some of the most meaningful. Coffee, encouragement, accountability — it all happens here.</div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <p class="section-label">Get Involved</p>
+  <h2 class="section-title">Ready to Be Forged?</h2>
+  <p class="join-body">Show up once and you'll understand. Iron Brotherhood is open to any man willing to do the work — in the gym, in the Word, and in life.</p>
+  <a class='btn-primary' href='join.html'>Join the Brotherhood</a>
+  <p class="join-note">No experience needed. No prerequisites. Just show up.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Iron <span>Brotherhood</span></div>
+  <div class="footer-verse">"As iron sharpens iron..." — Proverbs 27:17</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="calendar.html">Calendar</a></li>
+    <li><a href="contact.html">Questions</a></li>
+    <li><a href="join.html">Join</a></li>
+  </ul>
+</footer>
+
+<script>
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+</script>
+
+</body>
+</html>
