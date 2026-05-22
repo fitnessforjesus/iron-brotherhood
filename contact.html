@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask a Question — Iron Brotherhood</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --iron: #111111;
+    --forge: #7a1508;
+    --ember: #C0392B;
+    --ash: #1e1e1e;
+    --smoke: #2a2a2a;
+    --light: #f5f0e8;
+    --muted: rgba(245,240,232,0.6);
+    --faint: rgba(245,240,232,0.22);
+    --gold: #B8960C;
+  }
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--iron);
+    color: var(--light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(139,26,10,0.22) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.016) 60px, rgba(255,255,255,0.016) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.016) 60px, rgba(255,255,255,0.016) 61px);
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(17,17,17,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.15em;
+    color: var(--light);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--ember); }
+  .nav-back {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--light); }
+
+  /* MAIN */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 2rem 80px;
+    position: relative;
+    z-index: 1;
+  }
+  .card {
+    background: var(--ash);
+    border: 1px solid rgba(192,57,43,0.25);
+    padding: 3rem 3rem;
+    width: 100%;
+    max-width: 560px;
+    animation: fadeUp 0.7s ease both;
+  }
+  .emblem {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 2rem;
+  }
+  .emblem svg { width: 100%; height: 100%; }
+  .eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--ember);
+    margin-bottom: 0.6rem;
+    text-align: center;
+  }
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 9vw, 62px);
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    text-align: center;
+    margin-bottom: 0.4rem;
+  }
+  .rule {
+    width: 70px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ember), transparent);
+    margin: 1.25rem auto 1.5rem;
+  }
+  .card-sub {
+    text-align: center;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
+
+  /* FORM */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.1rem;
+  }
+  .form-group label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--ember);
+  }
+  .form-group input,
+  .form-group textarea {
+    background: var(--smoke);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--light);
+    padding: 0.75rem 1rem;
+    font-family: 'Crimson Pro', serif;
+    font-size: 17px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(245,240,232,0.25); }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--ember); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  .submit-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: var(--ember);
+    color: var(--light);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    text-align: center;
+  }
+  .submit-btn:hover { background: var(--forge); transform: translateY(-2px); }
+
+  /* SUCCESS STATE */
+  .success-state {
+    display: none;
+    text-align: center;
+    padding: 1rem 0;
+  }
+  .success-state .check {
+    font-size: 48px;
+    margin-bottom: 1rem;
+  }
+  .success-state h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.05em;
+    color: var(--light);
+    margin-bottom: 0.75rem;
+  }
+  .success-state p {
+    font-size: 17px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .back-link {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    text-decoration: none;
+    display: block;
+    margin-top: 1.5rem;
+    text-align: center;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 1.75rem 3rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.15em; color: var(--muted); }
+  .footer-logo span { color: var(--ember); }
+  .footer-verse { font-size: 13px; font-style: italic; color: var(--faint); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 480px) {
+    .card { padding: 2.25rem 1.5rem; }
+    nav { padding: 1rem 1.5rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-grid"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Iron <span>Brotherhood</span></a>
+  <a href="index.html" class="nav-back">← Back to Site</a>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="card">
+    <div class="emblem">
+      <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="6" width="12" height="60" rx="2" fill="#C0392B" opacity="0.9"/>
+        <rect x="6" y="25" width="60" height="12" rx="2" fill="#C0392B" opacity="0.9"/>
+        <rect x="34" y="10" width="4" height="52" rx="1" fill="#7a1508" opacity="0.7"/>
+        <rect x="10" y="29" width="52" height="4" rx="1" fill="#7a1508" opacity="0.7"/>
+        <circle cx="36" cy="36" r="34" stroke="#C0392B" stroke-width="0.5" opacity="0.2"/>
+      </svg>
+    </div>
+
+    <!-- FORM VIEW -->
+    <div id="formView">
+      <p class="eyebrow">Iron Brotherhood</p>
+      <h1 class="card-title">Ask a Question</h1>
+      <div class="rule"></div>
+      <p class="card-sub">Got a question about the group, the workouts, or what we're about? Send it our way — we'd love to hear from you.</p>
+
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="nameInput" placeholder="John Smith">
+      </div>
+      <div class="form-group">
+        <label>Your Email (so we can reply)</label>
+        <input type="email" id="emailInput" placeholder="you@email.com">
+      </div>
+      <div class="form-group">
+        <label>Your Question</label>
+        <textarea id="questionInput" placeholder="What's on your mind?"></textarea>
+      </div>
+
+      <a id="submitBtn" class="submit-btn" onclick="submitQuestion()">Send Question ✦</a>
+      <a href="index.html" class="back-link">← Back to Iron Brotherhood</a>
+    </div>
+
+    <!-- SUCCESS VIEW -->
+    <div class="success-state" id="successView">
+      <div class="check">✅</div>
+      <h3>Question Sent!</h3>
+      <p>Your question is on its way. We'll get back to you as soon as we can.</p>
+      <a href="index.html" class="submit-btn" style="display:inline-block; width:auto; padding: 0.85rem 2.5rem;">Back to Home</a>
+      <a href="contact.html" class="back-link" onclick="resetForm(); return false;">Ask Another Question</a>
+    </div>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Iron <span>Brotherhood</span></div>
+  <div class="footer-verse">"As iron sharpens iron..." — Proverbs 27:17</div>
+</footer>
+
+<script>
+  function submitQuestion() {
+    const name     = document.getElementById('nameInput').value.trim();
+    const email    = document.getElementById('emailInput').value.trim();
+    const question = document.getElementById('questionInput').value.trim();
+
+    if (!name || !question) {
+      alert('Please enter your name and your question.');
+      return;
+    }
+
+    const subject = encodeURIComponent('Iron Brotherhood Question from ' + name);
+    const body    = encodeURIComponent(
+      'Name: ' + name + '\n' +
+      'Email: ' + (email || 'Not provided') + '\n\n' +
+      'Question:\n' + question
+    );
+
+    window.location.href = `mailto:joshrfern@gmail.com?subject=${subject}&body=${body}`;
+
+    // Show success after short delay
+    setTimeout(() => {
+      document.getElementById('formView').style.display = 'none';
+      document.getElementById('successView').style.display = 'block';
+    }, 800);
+  }
+
+  function resetForm() {
+    document.getElementById('nameInput').value = '';
+    document.getElementById('emailInput').value = '';
+    document.getElementById('questionInput').value = '';
+    document.getElementById('formView').style.display = 'block';
+    document.getElementById('successView').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

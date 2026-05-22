@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar — Iron Brotherhood</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --iron: #111111;
+    --forge: #7a1508;
+    --ember: #C0392B;
+    --ash: #1e1e1e;
+    --smoke: #2a2a2a;
+    --light: #f5f0e8;
+    --muted: rgba(245,240,232,0.6);
+    --faint: rgba(245,240,232,0.22);
+    --gold: #B8960C;
+    --red-line: rgba(192,57,43,0.3);
+  }
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--iron);
+    color: var(--light);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(17,17,17,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.15em;
+    color: var(--light);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--ember); }
+  .nav-back {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--light); }
+
+  /* HEADER */
+  .page-header {
+    padding: 60px 2rem 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .page-header-text {}
+  .eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--ember);
+    margin-bottom: 0.5rem;
+  }
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 10vw, 80px);
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+  }
+  .admin-toggle-btn {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    padding: 0.6rem 1.5rem;
+    background: transparent;
+    border: 1px solid rgba(245,240,232,0.2);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .admin-toggle-btn:hover { border-color: var(--ember); color: var(--light); }
+  .admin-toggle-btn.active { background: var(--ember); border-color: var(--ember); color: var(--light); }
+
+  /* ADMIN PANEL */
+  .admin-panel {
+    max-width: 900px;
+    margin: 0 auto 2rem;
+    padding: 0 2rem;
+    display: none;
+  }
+  .admin-panel.open { display: block; }
+  .admin-box {
+    background: var(--ash);
+    border: 1px solid rgba(192,57,43,0.3);
+    padding: 2rem;
+  }
+  .admin-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: var(--light);
+    margin-bottom: 1.5rem;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--ember);
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--smoke);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--light);
+    padding: 0.65rem 0.85rem;
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--ember); }
+  .form-group select option { background: var(--smoke); }
+  .form-group textarea { resize: vertical; min-height: 70px; }
+  .form-actions { display: flex; gap: 1rem; margin-top: 0.5rem; }
+  .btn-save {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.18em;
+    padding: 0.75rem 2rem;
+    background: var(--ember);
+    color: var(--light);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-save:hover { background: var(--forge); }
+  .btn-cancel {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.18em;
+    padding: 0.75rem 2rem;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: none;
+  }
+  .btn-cancel.visible { display: block; }
+  .btn-cancel:hover { border-color: var(--light); color: var(--light); }
+
+  /* PASSWORD PROMPT */
+  .pw-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .pw-overlay.show { display: flex; }
+  .pw-box {
+    background: var(--ash);
+    border: 1px solid rgba(192,57,43,0.35);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+  }
+  .pw-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+  .pw-box p { font-size: 15px; color: var(--muted); margin-bottom: 1.5rem; }
+  .pw-box input {
+    width: 100%;
+    background: var(--smoke);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--light);
+    padding: 0.7rem 1rem;
+    font-family: 'Crimson Pro', serif;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 0.2em;
+    outline: none;
+    margin-bottom: 1rem;
+  }
+  .pw-box input:focus { border-color: var(--ember); }
+  .pw-error { color: var(--ember); font-size: 14px; margin-bottom: 0.75rem; display: none; }
+  .pw-error.show { display: block; }
+  .pw-btn {
+    width: 100%;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.18em;
+    padding: 0.8rem;
+    background: var(--ember);
+    color: var(--light);
+    border: none;
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+    transition: background 0.2s;
+  }
+  .pw-btn:hover { background: var(--forge); }
+  .pw-dismiss {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .pw-dismiss:hover { color: var(--muted); }
+
+  /* EVENTS LIST */
+  .events-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem 80px;
+  }
+  .month-group { margin-bottom: 3rem; }
+  .month-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    color: var(--ember);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .month-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--red-line);
+  }
+  .event-card {
+    background: var(--ash);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 1.5rem;
+    align-items: start;
+    transition: border-color 0.2s;
+  }
+  .event-card:hover { border-color: rgba(192,57,43,0.35); }
+  .event-date-block {
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding-right: 1.5rem;
+  }
+  .event-day-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--ember);
+  }
+  .event-day-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  .event-info {}
+  .event-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 0.05em;
+    color: var(--light);
+    margin-bottom: 0.35rem;
+  }
+  .event-meta {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .event-meta span { display: flex; align-items: center; gap: 5px; }
+  .event-desc { font-size: 16px; color: rgba(245,240,232,0.5); font-style: italic; line-height: 1.55; margin-top: 0.4rem; }
+  .event-actions { display: flex; flex-direction: column; gap: 0.5rem; }
+  .event-actions button {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    padding: 0.4rem 0.85rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .btn-edit { background: rgba(245,240,232,0.08); color: var(--muted); }
+  .btn-edit:hover { background: rgba(245,240,232,0.15); color: var(--light); }
+  .btn-delete { background: rgba(192,57,43,0.15); color: var(--ember); }
+  .btn-delete:hover { background: var(--ember); color: var(--light); }
+  .admin-actions { display: none; }
+  .admin-actions.visible { display: flex; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--faint);
+  }
+  .empty-state .big { font-family: 'Bebas Neue', sans-serif; font-size: 48px; letter-spacing: 0.05em; color: rgba(245,240,232,0.1); margin-bottom: 1rem; }
+  .empty-state p { font-size: 18px; font-style: italic; }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.15em; color: var(--muted); }
+  .footer-logo span { color: var(--ember); }
+  .footer-verse { font-size: 13px; font-style: italic; color: var(--faint); }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.5rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .event-card { grid-template-columns: 60px 1fr; }
+    .admin-actions { grid-column: 1 / -1; flex-direction: row; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD OVERLAY -->
+<div class="pw-overlay" id="pwOverlay">
+  <div class="pw-box">
+    <h3>Admin Access</h3>
+    <p>Enter the password to manage events.</p>
+    <input type="password" id="pwInput" placeholder="••••••••" onkeydown="if(event.key==='Enter') checkPassword()">
+    <p class="pw-error" id="pwError">Incorrect password. Try again.</p>
+    <button class="pw-btn" onclick="checkPassword()">Enter</button>
+    <button class="pw-dismiss" onclick="closePwOverlay()">Cancel</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Iron <span>Brotherhood</span></a>
+  <a href="index.html" class="nav-back">← Back to Site</a>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="page-header-text">
+    <p class="eyebrow">Iron Brotherhood</p>
+    <h1 class="page-title">Upcoming<br>Sessions</h1>
+  </div>
+  <button class="admin-toggle-btn" id="adminToggleBtn" onclick="handleAdminToggle()">⚙ Manage Events</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-box">
+    <h3 id="formTitle">Add New Event</h3>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Event Title</label>
+        <input type="text" id="evTitle" placeholder="e.g. Iron Brotherhood — Week 12">
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="evDate">
+      </div>
+      <div class="form-group">
+        <label>Time</label>
+        <input type="time" id="evTime" value="06:00">
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" id="evLocation" placeholder="e.g. Durham CrossFit, 123 Main St">
+      </div>
+      <div class="form-group full">
+        <label>Notes (optional)</label>
+        <textarea id="evNotes" placeholder="e.g. Bring your own water. Devotion on Proverbs 27."></textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-save" onclick="saveEvent()">Save Event</button>
+      <button class="btn-cancel" id="cancelBtn" onclick="cancelEdit()">Cancel Edit</button>
+    </div>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<div class="events-section" id="eventsSection"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Iron <span>Brotherhood</span></div>
+  <div class="footer-verse">"As iron sharpens iron..." — Proverbs 27:17</div>
+</footer>
+
+<script>
+  // ── CONFIG ──
+  const ADMIN_PASSWORD = 'ironbrotherhood';
+  const STORAGE_KEY = 'ib_events';
+
+  // ── STATE ──
+  let isAdmin = false;
+  let editingId = null;
+  let events = [];
+
+  // ── INIT ──
+  function init() {
+    loadEvents();
+    renderEvents();
+  }
+
+  // ── STORAGE ──
+  function loadEvents() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      events = raw ? JSON.parse(raw) : getSampleEvents();
+    } catch(e) {
+      events = getSampleEvents();
+    }
+  }
+
+  function saveEvents() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+  }
+
+  function getSampleEvents() {
+    // Default upcoming Saturday at 6am as a starter
+    const nextSat = getNextSaturday();
+    return [
+      {
+        id: 'sample1',
+        title: 'Iron Brotherhood — Weekly Session',
+        date: nextSat,
+        time: '06:00',
+        location: 'Location TBD — Text to get details',
+        notes: 'Workout followed by a short devotion. All men welcome. Always free.'
+      }
+    ];
+  }
+
+  function getNextSaturday() {
+    const d = new Date();
+    const day = d.getDay();
+    const diff = (6 - day + 7) % 7 || 7;
+    d.setDate(d.getDate() + diff);
+    return d.toISOString().split('T')[0];
+  }
+
+  // ── PASSWORD ──
+  function handleAdminToggle() {
+    if (isAdmin) {
+      // toggle panel
+      const panel = document.getElementById('adminPanel');
+      panel.classList.toggle('open');
+      document.getElementById('adminToggleBtn').classList.toggle('active', panel.classList.contains('open'));
+    } else {
+      document.getElementById('pwOverlay').classList.add('show');
+      setTimeout(() => document.getElementById('pwInput').focus(), 100);
+    }
+  }
+
+  function checkPassword() {
+    const val = document.getElementById('pwInput').value;
+    if (val === ADMIN_PASSWORD) {
+      isAdmin = true;
+      document.getElementById('pwOverlay').classList.remove('show');
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwError').classList.remove('show');
+      document.getElementById('adminPanel').classList.add('open');
+      document.getElementById('adminToggleBtn').classList.add('active');
+      document.getElementById('adminToggleBtn').textContent = '⚙ Manage Events';
+      renderEvents();
+    } else {
+      document.getElementById('pwError').classList.add('show');
+      document.getElementById('pwInput').value = '';
+      document.getElementById('pwInput').focus();
+    }
+  }
+
+  function closePwOverlay() {
+    document.getElementById('pwOverlay').classList.remove('show');
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwError').classList.remove('show');
+  }
+
+  // ── CRUD ──
+  function saveEvent() {
+    const title = document.getElementById('evTitle').value.trim();
+    const date  = document.getElementById('evDate').value;
+    const time  = document.getElementById('evTime').value;
+    const loc   = document.getElementById('evLocation').value.trim();
+    const notes = document.getElementById('evNotes').value.trim();
+
+    if (!title || !date || !time || !loc) {
+      alert('Please fill in Title, Date, Time, and Location.');
+      return;
+    }
+
+    if (editingId) {
+      const idx = events.findIndex(e => e.id === editingId);
+      if (idx !== -1) events[idx] = { id: editingId, title, date, time, location: loc, notes };
+      editingId = null;
+    } else {
+      events.push({ id: Date.now().toString(), title, date, time, location: loc, notes });
+    }
+
+    saveEvents();
+    clearForm();
+    renderEvents();
+  }
+
+  function editEvent(id) {
+    const ev = events.find(e => e.id === id);
+    if (!ev) return;
+    editingId = id;
+    document.getElementById('evTitle').value    = ev.title;
+    document.getElementById('evDate').value     = ev.date;
+    document.getElementById('evTime').value     = ev.time;
+    document.getElementById('evLocation').value = ev.location;
+    document.getElementById('evNotes').value    = ev.notes || '';
+    document.getElementById('formTitle').textContent = 'Edit Event';
+    document.getElementById('cancelBtn').classList.add('visible');
+    // ensure panel open
+    document.getElementById('adminPanel').classList.add('open');
+    document.getElementById('adminToggleBtn').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function deleteEvent(id) {
+    if (!confirm('Delete this event?')) return;
+    events = events.filter(e => e.id !== id);
+    saveEvents();
+    renderEvents();
+  }
+
+  function cancelEdit() {
+    editingId = null;
+    clearForm();
+  }
+
+  function clearForm() {
+    document.getElementById('evTitle').value    = '';
+    document.getElementById('evDate').value     = '';
+    document.getElementById('evTime').value     = '06:00';
+    document.getElementById('evLocation').value = '';
+    document.getElementById('evNotes').value    = '';
+    document.getElementById('formTitle').textContent = 'Add New Event';
+    document.getElementById('cancelBtn').classList.remove('visible');
+  }
+
+  // ── RENDER ──
+  function renderEvents() {
+    const container = document.getElementById('eventsSection');
+    const sorted = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const today = new Date(); today.setHours(0,0,0,0);
+    const upcoming = sorted.filter(e => new Date(e.date) >= today);
+    const past     = sorted.filter(e => new Date(e.date) < today);
+
+    if (upcoming.length === 0 && past.length === 0) {
+      container.innerHTML = `<div class="empty-state"><div class="big">No Events Yet</div><p>Check back soon — or text us to get the details on the next session.</p></div>`;
+      return;
+    }
+
+    let html = '';
+
+    if (upcoming.length > 0) {
+      const byMonth = groupByMonth(upcoming);
+      for (const [month, evs] of Object.entries(byMonth)) {
+        html += `<div class="month-group"><div class="month-heading">${month}</div>`;
+        evs.forEach(ev => { html += renderCard(ev); });
+        html += `</div>`;
+      }
+    }
+
+    if (past.length > 0) {
+      html += `<div class="month-group"><div class="month-heading" style="opacity:0.45">Past Sessions</div>`;
+      past.reverse().forEach(ev => { html += renderCard(ev, true); });
+      html += `</div>`;
+    }
+
+    container.innerHTML = html;
+  }
+
+  function renderCard(ev, isPast = false) {
+    const d = new Date(ev.date + 'T12:00:00');
+    const dayNum  = d.getDate();
+    const dayName = d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+    const timeStr = formatTime(ev.time);
+    const opacity = isPast ? 'opacity:0.5;' : '';
+    const adminBtns = isAdmin
+      ? `<div class="event-actions admin-actions visible">
+           <button class="btn-edit" onclick="editEvent('${ev.id}')">Edit</button>
+           <button class="btn-delete" onclick="deleteEvent('${ev.id}')">Delete</button>
+         </div>`
+      : '';
+    return `
+      <div class="event-card" style="${opacity}">
+        <div class="event-date-block">
+          <div class="event-day-num">${dayNum}</div>
+          <div class="event-day-name">${dayName}</div>
+        </div>
+        <div class="event-info">
+          <div class="event-title">${ev.title}</div>
+          <div class="event-meta">
+            <span>🕕 ${timeStr}</span>
+            <span>📍 ${ev.location}</span>
+          </div>
+          ${ev.notes ? `<div class="event-desc">${ev.notes}</div>` : ''}
+        </div>
+        ${adminBtns}
+      </div>`;
+  }
+
+  function groupByMonth(evs) {
+    const groups = {};
+    evs.forEach(ev => {
+      const d = new Date(ev.date + 'T12:00:00');
+      const key = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase();
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(ev);
+    });
+    return groups;
+  }
+
+  function formatTime(t) {
+    if (!t) return '';
+    const [h, m] = t.split(':').map(Number);
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = h % 12 || 12;
+    return `${h12}:${m.toString().padStart(2,'0')} ${ampm}`;
+  }
+
+  init();
+</script>
+</body>
+</html>
