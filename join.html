@@ -123,6 +123,17 @@
     letter-spacing: 0.12em;
     color: var(--gold);
   }
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .button-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
   .sms-btn {
     display: block;
     width: 100%;
@@ -134,7 +145,6 @@
     letter-spacing: 0.18em;
     text-decoration: none;
     transition: background 0.2s, transform 0.15s;
-    margin-bottom: 1.25rem;
   }
   .sms-btn:hover { background: var(--forge); transform: translateY(-2px); }
   .back-link {
@@ -186,13 +196,25 @@
 
   <p class="instruction">Ready to show up? Join the group chat to get connected, see updates, and get location details.</p>
 
-  <div class="text-box">
-    <p class="text-step">Tap the button below to join</p>
-    <span class="text-keyword">GroupMe</span>
-    <p class="text-to-label">Iron Brotherhood Group Chat</p>
-  </div>
+  <div class="button-group">
+    <div class="button-section">
+      <div class="text-box">
+        <p class="text-step">Tap the button below to join</p>
+        <span class="text-keyword">GroupMe</span>
+        <p class="text-to-label">Iron Brotherhood Group Chat</p>
+      </div>
+      <a href="https://groupme.com/join_group/115033338/bO8r9Nru" target="_blank" class="sms-btn">💬 Join the Group Chat</a>
+    </div>
 
-  <a href="https://groupme.com/join_group/115033338/bO8r9Nru" target="_blank" class="sms-btn">💬 Join the Group Chat</a>
+    <div class="button-section">
+      <div class="text-box">
+        <p class="text-step">Or join us on</p>
+        <span class="text-keyword">Strava</span>
+        <p class="text-to-label">Iron Brotherhood Club</p>
+      </div>
+      <a href="https://www.strava.com/clubs/iron-brotherhood" target="_blank" class="sms-btn">🏃 Join on Strava</a>
+    </div>
+  </div>
 
   <a href="index.html" class="back-link">← Back to Iron Brotherhood</a>
 </div>
