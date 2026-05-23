@@ -475,6 +475,28 @@
     margin: 0 auto 2.5rem;
     line-height: 1.7;
   }
+  .join-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+  }
+  .join-btn {
+    display: inline-block;
+    padding: 0.9rem 2.8rem;
+    background: var(--ember);
+    color: var(--light);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+  }
+  .join-btn:hover { background: var(--forge); transform: translateY(-2px); }
   .join-note {
     margin-top: 2rem;
     font-size: 14px;
@@ -545,6 +567,8 @@
     .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
     .schedule-cards { grid-template-columns: 1fr; }
     .btn-outline { margin-left: 0; margin-top: 0.75rem; display: block; text-align: center; }
+    .join-buttons { flex-direction: column; align-items: center; }
+    .join-btn { width: 100%; max-width: 360px; }
     footer { flex-direction: column; text-align: center; }
   }
 </style>
@@ -553,27 +577,27 @@
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-logo">Iron <span>Brotherhood</span></a>
+  <a href="#" class="nav-logo">Iron <span>Brotherhood</span></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#schedule">Schedule</a></li>
     <li><a href="#expect">What to Expect</a></li>
     <li><a href="calendar.html">Calendar</a></li>
     <li><a href="contact.html">Questions</a></li>
-    <li><a href="join.html">Join Us</a></li>
+    <li><a href="#join">Join Us</a></li>
   </ul>
-  <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+  <button class="nav-hamburger" onclick="toggleMobileNav()">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<ul class="nav-mobile" id="mobileNav">
-  <li><a href="#about" onclick="closeMobileNav()">About</a></li>
-  <li><a href="#schedule" onclick="closeMobileNav()">Schedule</a></li>
-  <li><a href="#expect" onclick="closeMobileNav()">What to Expect</a></li>
+<ul class="nav-mobile" id="navMobile">
+  <li><a href="#about">About</a></li>
+  <li><a href="#schedule">Schedule</a></li>
+  <li><a href="#expect">What to Expect</a></li>
   <li><a href="calendar.html">Calendar</a></li>
   <li><a href="contact.html">Questions</a></li>
-  <li><a href="join.html">Join Us</a></li>
+  <li><a href="#join">Join Us</a></li>
 </ul>
 
 <!-- HERO -->
@@ -599,7 +623,7 @@
     <p class="hero-sub">Where men are forged — in body, in spirit, and in brotherhood.</p>
     <p class="hero-verse">Proverbs 27:17 &nbsp;·&nbsp; Iron Sharpens Iron</p>
     <div class="hero-cta">
-      <a class='btn-primary' href='join.html'>Join the Brotherhood</a>
+      <a href="#join" class="btn-primary">Join the Brotherhood</a>
       <a href="#about" class="btn-outline">Learn More</a>
     </div>
   </div>
@@ -672,82 +696,76 @@
     </div>
     <div class="sched-card featured">
       <div class="scard-icon">⚡</div>
-      <div class="scard-label">Format</div>
-      <div class="scard-value">Workout<br>then Word</div>
-      <div class="scard-desc">An hour of iron, followed by a short devotion to anchor what we're building in the gym and in life.</div>
+      <div class="scard-label">Intensity</div>
+      <div class="scard-value">Full Body</div>
+      <div class="scard-desc">We lift heavy, move hard, and push past what we thought was possible. Scaled for every level.</div>
     </div>
     <div class="sched-card">
-      <div class="scard-icon">📍</div>
-      <div class="scard-label">Location</div>
-      <div class="scard-value">Contact Us for Details</div>
-      <div class="scard-desc">We'll get you the location when you reach out. Always free — just show up.</div>
+      <div class="scard-icon">⛪</div>
+      <div class="scard-label">Afterwards</div>
+      <div class="scard-value">Devotion</div>
+      <div class="scard-desc">Following the work, a time to align our hearts and minds with scripture and truth.</div>
     </div>
-  </div>
-  <div style="text-align:center; margin-top:2.5rem;">
-    <a class='btn-primary' href='calendar.html'>View Full Calendar</a>
   </div>
 </section>
 
 <!-- WHAT TO EXPECT -->
 <section id="expect">
-  <p class="section-label">The Session</p>
+  <p class="section-label">Experience</p>
   <h2 class="section-title">What to Expect</h2>
   <div class="timeline">
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-time">Arrive</div>
-      <div class="tl-title">Warm Up & Connect</div>
-      <div class="tl-desc">Show up, meet the men, get loose. No need to know anyone — you'll leave knowing everyone.</div>
+      <div class="tl-time">5:50 AM — Gather</div>
+      <div class="tl-title">Show Up Early</div>
+      <div class="tl-desc">Come ready. No excuses. We start on time, and we start strong. This is the brotherhood — men who honor their word.</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-time">The Grind</div>
-      <div class="tl-title">Group Workout</div>
-      <div class="tl-desc">A challenging, full-body session led by the group. Every fitness level welcome — we scale for anyone. Expect to sweat and to be pushed.</div>
+      <div class="tl-time">6:00 AM — Move</div>
+      <div class="tl-title">The Workout</div>
+      <div class="tl-desc">60 minutes of compound movements and conditioning. Whether you're lifting heavy or scaling the work, you're pushing yourself and sharpening those around you.</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-time">The Word</div>
-      <div class="tl-title">Short Devotion</div>
-      <div class="tl-desc">We cool down and open the Word together. A passage, a few honest questions, and real conversation. Usually 20–30 minutes. Always worth it.</div>
+      <div class="tl-time">7:00 AM — Reflect</div>
+      <div class="tl-title">Devotion & Word</div>
+      <div class="tl-desc">We cool down together and dive into scripture. Real talk about what it means to live as a man of God — not preachy, not performative. Just truth.</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-time">After</div>
-      <div class="tl-title">Brotherhood</div>
-      <div class="tl-desc">Stick around. The conversations that happen after are some of the most meaningful. Coffee, encouragement, accountability — it all happens here.</div>
+      <div class="tl-time">7:30 AM — Brotherhood</div>
+      <div class="tl-title">Connection</div>
+      <div class="tl-desc">Grab coffee, exchange numbers, make plans. This is where lifelong friendships and accountability relationships begin.</div>
     </div>
   </div>
 </section>
 
-<!-- JOIN -->
+<!-- JOIN US -->
 <section id="join">
   <p class="section-label">Get Involved</p>
-  <h2 class="section-title">Ready to Be Forged?</h2>
-  <p class="join-body">Show up once and you'll understand. Iron Brotherhood is open to any man willing to do the work — in the gym, in the Word, and in life.</p>
-  <a class='btn-primary' href='join.html'>Join the Brotherhood</a>
-  <p class="join-note">No experience needed. No prerequisites. Just show up.</p>
+  <h2 class="section-title">Join Us</h2>
+  <p class="join-body">Ready to show up? Connect with the brotherhood through GroupMe for daily chat and updates, or join us on Strava to track workouts together.</p>
+  <div class="join-buttons">
+    <a href="https://groupme.com/join_group/115033338/bO8r9Nru" target="_blank" class="join-btn">💬 GroupMe Chat</a>
+    <a href="https://www.strava.com/clubs/iron-brotherhood" target="_blank" class="join-btn">🏃 Strava Club</a>
+  </div>
+  <p class="join-note">Or reach out with questions — we'd love to hear from you.</p>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Iron <span>Brotherhood</span></div>
-  <div class="footer-verse">"As iron sharpens iron..." — Proverbs 27:17</div>
   <ul class="footer-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="contact.html">Contact</a></li>
     <li><a href="calendar.html">Calendar</a></li>
-    <li><a href="contact.html">Questions</a></li>
-    <li><a href="join.html">Join</a></li>
   </ul>
+  <div class="footer-verse">"As iron sharpens iron..." — Proverbs 27:17</div>
 </footer>
 
 <script>
   function toggleMobileNav() {
-    document.getElementById('mobileNav').classList.toggle('open');
-  }
-  function closeMobileNav() {
-    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('navMobile').classList.toggle('open');
   }
 </script>
 
