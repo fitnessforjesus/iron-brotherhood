@@ -305,241 +305,72 @@
   .pillar-text {
     font-size: 16px;
     color: var(--muted);
-    line-height: 1.6;
-  }
-
-  /* ── QUOTE BAND ── */
-  .quote-band {
-    background: var(--ash);
-    border-top: 1px solid rgba(255,255,255,0.04);
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    padding: 70px 2rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .quote-band::before {
-    content: '\201C';
-    position: absolute;
-    font-family: 'Crimson Pro', serif;
-    font-size: 300px;
-    color: var(--ember);
-    opacity: 0.06;
-    top: -60px;
-    left: 5%;
-    line-height: 1;
-    pointer-events: none;
-  }
-  .quote-band blockquote {
-    font-family: 'Crimson Pro', serif;
-    font-style: italic;
-    font-size: clamp(24px, 4vw, 38px);
-    line-height: 1.5;
-    color: var(--light);
-    max-width: 700px;
-    margin: 0 auto 1.5rem;
-    position: relative;
-    z-index: 1;
-  }
-  .quote-ref {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.25em;
-    font-size: 13px;
-    color: var(--gold);
-  }
-
-  /* ── SCHEDULE ── */
-  #schedule {
-    padding: 100px 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .schedule-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .sched-card {
-    background: var(--ash);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 2rem;
-    position: relative;
-    transition: border-color 0.2s;
-  }
-  .sched-card:hover { border-color: rgba(192,57,43,0.4); }
-  .sched-card.featured {
-    border-color: var(--ember);
-    background: linear-gradient(135deg, var(--ash) 0%, rgba(139,26,10,0.15) 100%);
-  }
-  .scard-icon {
-    font-size: 28px;
-    margin-bottom: 1.25rem;
-  }
-  .scard-label {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: var(--ember);
-    margin-bottom: 0.5rem;
-  }
-  .scard-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 30px;
-    letter-spacing: 0.05em;
-    color: var(--light);
-    margin-bottom: 0.75rem;
-    line-height: 1.1;
-  }
-  .scard-desc {
-    font-size: 15px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  /* ── WHAT TO EXPECT ── */
-  #expect {
-    padding: 100px 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .timeline {
-    margin-top: 3rem;
-    position: relative;
-    padding-left: 2rem;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 8px; bottom: 8px;
-    width: 1px;
-    background: linear-gradient(180deg, var(--ember), rgba(192,57,43,0.1));
-  }
-  .tl-item {
-    position: relative;
-    padding: 0 0 2.5rem 2.5rem;
-  }
-  .tl-item:last-child { padding-bottom: 0; }
-  .tl-dot {
-    position: absolute;
-    left: -5px;
-    top: 6px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--ember);
-    border: 2px solid var(--iron);
-  }
-  .tl-time {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.25em;
-    color: var(--ember);
-    margin-bottom: 0.35rem;
-  }
-  .tl-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px;
-    letter-spacing: 0.05em;
-    color: var(--light);
-    margin-bottom: 0.5rem;
-  }
-  .tl-desc {
-    font-size: 17px;
-    color: var(--muted);
-    line-height: 1.65;
-    max-width: 560px;
   }
 
   /* ── JOIN ── */
   #join {
-    padding: 100px 2rem 120px;
+    padding: 100px 2rem;
+    max-width: 900px;
+    margin: 0 auto;
     text-align: center;
-    background: linear-gradient(180deg, var(--iron) 0%, #080808 100%);
   }
-  #join .section-label { justify-content: center; }
-  #join .section-label::before {
-    content: '';
-    flex: 1;
-    max-width: 60px;
-    height: 1px;
-    background: var(--red-line);
+  .join-content {
+    background: var(--ash);
+    border: 1px solid var(--red-line);
+    padding: 3rem;
   }
-  #join .section-label::after { max-width: 60px; }
-  #join .section-title { text-align: center; }
-  .join-body {
-    font-size: 19px;
-    font-style: italic;
+  .join-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 56px);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .join-subtitle {
+    font-size: 18px;
     color: var(--muted);
-    max-width: 520px;
-    margin: 0 auto 2.5rem;
-    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .join-buttons {
     display: flex;
-    gap: 1.5rem;
-    justify-content: center;
     flex-wrap: wrap;
-    max-width: 800px;
-    margin: 0 auto 2rem;
+    justify-content: center;
+    gap: 1.5rem;
   }
   .join-btn {
     display: inline-block;
-    padding: 0.9rem 2.8rem;
+    padding: 1rem 2.5rem;
     background: var(--ember);
     color: var(--light);
     font-family: 'Bebas Neue', sans-serif;
     font-size: 16px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
+    transition: all 0.2s;
     border: none;
     cursor: pointer;
   }
-  .join-btn:hover { background: var(--forge); transform: translateY(-2px); }
-  .join-note {
-    margin-top: 2rem;
-    font-size: 14px;
-    color: var(--faint);
-    letter-spacing: 0.05em;
+  .join-btn:hover {
+    background: var(--forge);
+    transform: translateY(-2px);
   }
 
   /* ── FOOTER ── */
   footer {
-    padding: 2.5rem 3rem;
+    padding: 3rem 2rem;
+    background: var(--ash);
     border-top: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+    text-align: center;
   }
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 0.15em;
+  .footer-text {
+    font-size: 14px;
     color: var(--muted);
-  }
-  .footer-logo span { color: var(--ember); }
-  .footer-verse {
-    font-size: 13px;
-    font-style: italic;
-    color: var(--faint);
-  }
-  .footer-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-  }
-  .footer-links a {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    color: var(--faint);
-    text-decoration: none;
-    transition: color 0.2s;
+    letter-spacing: 0.1em;
   }
-  .footer-links a:hover { color: var(--light); }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeIn {
@@ -547,29 +378,34 @@
     to { opacity: 1; }
   }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
   @keyframes expandWidth {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
+    from { width: 0; }
+    to { width: 100px; }
   }
   @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.8; }
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
   }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
+    .nav-logo { font-size: 18px; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
-    .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-    .schedule-cards { grid-template-columns: 1fr; }
-    .btn-outline { margin-left: 0; margin-top: 0.75rem; display: block; text-align: center; }
-    .join-buttons { flex-direction: column; align-items: center; }
-    .join-btn { width: 100%; max-width: 360px; }
-    footer { flex-direction: column; text-align: center; }
+    .hero { padding: 80px 1.5rem 60px; }
+    .hero-title { font-size: clamp(48px, 12vw, 80px); }
+    .hero-title .outline { font-size: clamp(32px, 8vw, 54px); }
+    .btn-outline { margin-left: 0; margin-top: 1rem; }
+    .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+    #about { padding: 60px 1.5rem; }
+    #join { padding: 60px 1.5rem; }
+    .join-content { padding: 2rem; }
+    .join-buttons { flex-direction: column; }
+    .join-btn { width: 100%; }
   }
 </style>
 </head>
@@ -577,27 +413,18 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">Iron <span>Brotherhood</span></a>
+  <a href="#" class="nav-logo">IRON <span>BROTHERHOOD</span></a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#schedule">Schedule</a></li>
-    <li><a href="#expect">What to Expect</a></li>
-    <li><a href="calendar.html">Calendar</a></li>
-    <li><a href="contact.html">Questions</a></li>
-    <li><a href="#join">Join Us</a></li>
+    <li><a href="#about">ABOUT</a></li>
+    <li><a href="#join">JOIN</a></li>
   </ul>
-  <button class="nav-hamburger" onclick="toggleMobileNav()">
+  <button class="nav-hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
 </nav>
-
 <ul class="nav-mobile" id="navMobile">
-  <li><a href="#about">About</a></li>
-  <li><a href="#schedule">Schedule</a></li>
-  <li><a href="#expect">What to Expect</a></li>
-  <li><a href="calendar.html">Calendar</a></li>
-  <li><a href="contact.html">Questions</a></li>
-  <li><a href="#join">Join Us</a></li>
+  <li><a href="#about" onclick="toggleMenu()">ABOUT</a></li>
+  <li><a href="#join" onclick="toggleMenu()">JOIN</a></li>
 </ul>
 
 <!-- HERO -->
@@ -605,167 +432,86 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <div class="emblem">
-      <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="30" y="6" width="12" height="60" rx="2" fill="#C0392B" opacity="0.9"/>
-        <rect x="6" y="25" width="60" height="12" rx="2" fill="#C0392B" opacity="0.9"/>
-        <rect x="34" y="10" width="4" height="52" rx="1" fill="#7a1508" opacity="0.7"/>
-        <rect x="10" y="29" width="52" height="4" rx="1" fill="#7a1508" opacity="0.7"/>
-        <circle cx="36" cy="36" r="34" stroke="#C0392B" stroke-width="0.5" opacity="0.2"/>
-      </svg>
-    </div>
-    <p class="hero-eyebrow">Weekly Men's Group</p>
+    <svg class="emblem" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
+      <path d="M50 20L65 35L65 65C65 75 58 85 50 90C42 85 35 75 35 65L35 35Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
+      <circle cx="50" cy="35" r="4" fill="currentColor"/>
+    </svg>
+    <p class="hero-eyebrow">WEEKLY WORKOUT & DEVOTION</p>
     <h1 class="hero-title">
-      Iron
-      <span class="outline">Brotherhood</span>
+      IRON
+      <span class="outline">IRON</span>
     </h1>
     <div class="hero-rule"></div>
-    <p class="hero-sub">Where men are forged — in body, in spirit, and in brotherhood.</p>
-    <p class="hero-verse">Proverbs 27:17 &nbsp;·&nbsp; Iron Sharpens Iron</p>
+    <p class="hero-sub">Strengthen your body and spirit with brothers in Christ through intentional fitness and faith</p>
+    <p class="hero-verse">2 Timothy 2:2</p>
     <div class="hero-cta">
-      <a href="#join" class="btn-primary">Join the Brotherhood</a>
-      <a href="#about" class="btn-outline">Learn More</a>
+      <a href="#join" class="btn-primary">GET STARTED</a>
+      <a href="#about" class="btn-outline">LEARN MORE</a>
     </div>
   </div>
   <div class="scroll-indicator">
-    <span>Scroll</span>
+    <span>SCROLL</span>
     <div class="scroll-line"></div>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-  <p class="section-label">Who We Are</p>
-  <h2 class="section-title">Built for More</h2>
+  <div class="section-label">WHAT WE DO</div>
+  <h2 class="section-title">Our Mission</h2>
   <div class="about-layout">
     <div class="about-text">
-      <p>Iron Brotherhood is a weekly gathering of men committed to sharpening each other — in the weight room and in the Word. We believe real strength isn't just physical.</p>
-      <p>Every week we sweat together, then sit together, digging into what it means to live as men of faith and character. No performance. No pretense. Just iron sharpening iron.</p>
-      <p>This is a place to be challenged, to be known, and to grow into the man you're called to be.</p>
+      <p>Iron Brotherhood is more than a fitness group—it's a community of men committed to building strength in both body and faith. We gather weekly for structured workouts combined with biblical reflection and brotherhood.</p>
+      <p>Our vision is to create spaces where men can challenge themselves physically, grow spiritually, and develop meaningful friendships rooted in Christ.</p>
     </div>
     <div class="pillars-grid">
       <div class="pillar">
-        <div class="pillar-num">01</div>
+        <div class="pillar-num">1</div>
         <div class="pillar-content">
-          <div class="pillar-title">Workout</div>
-          <div class="pillar-text">Push your limits alongside men who will challenge and carry you. No spectators — everyone works.</div>
+          <h3 class="pillar-title">STRENGTH</h3>
+          <p class="pillar-text">Physical training that pushes limits and builds resilience</p>
         </div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">02</div>
+        <div class="pillar-num">2</div>
         <div class="pillar-content">
-          <div class="pillar-title">Devotion</div>
-          <div class="pillar-text">A short, honest look at scripture. Real talk for real life. No fluff, no performance.</div>
+          <h3 class="pillar-title">FAITH</h3>
+          <p class="pillar-text">Devotional moments connecting Scripture to daily life</p>
         </div>
       </div>
       <div class="pillar">
-        <div class="pillar-num">03</div>
+        <div class="pillar-num">3</div>
         <div class="pillar-content">
-          <div class="pillar-title">Brotherhood</div>
-          <div class="pillar-text">Men you can count on — a place to be known, to be challenged, and to be encouraged.</div>
-        </div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-num">04</div>
-        <div class="pillar-content">
-          <div class="pillar-title">Accountability</div>
-          <div class="pillar-text">We don't grow alone. Iron Brotherhood holds men to who they're becoming, week by week.</div>
+          <h3 class="pillar-title">BROTHERHOOD</h3>
+          <p class="pillar-text">Deep friendships forged through accountability and support</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- QUOTE BAND -->
-<div class="quote-band">
-  <blockquote>As iron sharpens iron, so one person sharpens another.</blockquote>
-  <p class="quote-ref">Proverbs 27:17</p>
-</div>
-
-<!-- SCHEDULE -->
-<section id="schedule">
-  <p class="section-label">When & Where</p>
-  <h2 class="section-title">Show Up</h2>
-  <div class="schedule-cards">
-    <div class="sched-card">
-      <div class="scard-icon">📅</div>
-      <div class="scard-label">Day</div>
-      <div class="scard-value">Every Saturday</div>
-      <div class="scard-desc" style="margin-bottom:0.5rem;">Rain or shine, week after week. Consistency is where transformation lives.</div>
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--ember); letter-spacing:0.08em;">6:00 AM</div>
-    </div>
-    <div class="sched-card featured">
-      <div class="scard-icon">⚡</div>
-      <div class="scard-label">Intensity</div>
-      <div class="scard-value">Full Body</div>
-      <div class="scard-desc">We lift heavy, move hard, and push past what we thought was possible. Scaled for every level.</div>
-    </div>
-    <div class="sched-card">
-      <div class="scard-icon">⛪</div>
-      <div class="scard-label">Afterwards</div>
-      <div class="scard-value">Devotion</div>
-      <div class="scard-desc">Following the work, a time to align our hearts and minds with scripture and truth.</div>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT TO EXPECT -->
-<section id="expect">
-  <p class="section-label">Experience</p>
-  <h2 class="section-title">What to Expect</h2>
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-time">5:50 AM — Gather</div>
-      <div class="tl-title">Show Up Early</div>
-      <div class="tl-desc">Come ready. No excuses. We start on time, and we start strong. This is the brotherhood — men who honor their word.</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-time">6:00 AM — Move</div>
-      <div class="tl-title">The Workout</div>
-      <div class="tl-desc">60 minutes of compound movements and conditioning. Whether you're lifting heavy or scaling the work, you're pushing yourself and sharpening those around you.</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-time">7:00 AM — Reflect</div>
-      <div class="tl-title">Devotion & Word</div>
-      <div class="tl-desc">We cool down together and dive into scripture. Real talk about what it means to live as a man of God — not preachy, not performative. Just truth.</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-time">7:30 AM — Brotherhood</div>
-      <div class="tl-title">Connection</div>
-      <div class="tl-desc">Grab coffee, exchange numbers, make plans. This is where lifelong friendships and accountability relationships begin.</div>
-    </div>
-  </div>
-</section>
-
-<!-- JOIN US -->
+<!-- JOIN -->
 <section id="join">
-  <p class="section-label">Get Involved</p>
-  <h2 class="section-title">Join Us</h2>
-  <p class="join-body">Ready to show up? Connect with the brotherhood through GroupMe for daily chat and updates, or join us on Strava to track workouts together.</p>
-  <div class="join-buttons">
-    <a href="https://groupme.com/join_group/115033338/bO8r9Nru" target="_blank" class="join-btn">💬 GroupMe Chat</a>
-    <a href="https://www.strava.com/clubs/iron-brotherhood" target="_blank" class="join-btn">🏃 Strava Club</a>
+  <div class="join-content">
+    <h2 class="join-title">Ready to Join the Brotherhood?</h2>
+    <p class="join-subtitle">Connect with us through our community platforms and start your journey today</p>
+    <div class="join-buttons">
+      <a href="https://groupme.com/join_group/115033338/bO8r9Nru" target="_blank" class="join-btn">💬 GroupMe Chat</a>
+      <a href="https://www.strava.com/clubs/2152589" target="_blank" class="join-btn">🏃 Strava Club</a>
+    </div>
   </div>
-  <p class="join-note">Or reach out with questions — we'd love to hear from you.</p>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Iron <span>Brotherhood</span></div>
-  <ul class="footer-links">
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="calendar.html">Calendar</a></li>
-  </ul>
-  <div class="footer-verse">"As iron sharpens iron..." — Proverbs 27:17</div>
+  <p class="footer-text">© 2025 IRON BROTHERHOOD. FORGED IN FAITH. STRONGER TOGETHER.</p>
 </footer>
 
 <script>
-  function toggleMobileNav() {
-    document.getElementById('navMobile').classList.toggle('open');
+  function toggleMenu() {
+    const navMobile = document.getElementById('navMobile');
+    navMobile.classList.toggle('open');
   }
 </script>
 
