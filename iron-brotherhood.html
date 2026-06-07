@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iron Brotherhood — Weekly Men's Workout & Devotion</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --iron: #111111;
+    --forge: #7a1508;
+    --ember: #C0392B;
+    --ash: #1e1e1e;
+    --smoke: #2a2a2a;
+    --light: #f5f0e8;
+    --muted: rgba(245,240,232,0.6);
+    --faint: rgba(245,240,232,0.22);
+    --gold: #B8960C;
+    --red-line: rgba(192,57,43,0.3);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--iron);
+    color: var(--light);
+    overflow-x: hidden;
+  }
+  a { text-decoration: none; color: inherit; cursor: pointer; }
+  button { font-family: inherit; background: none; border: none; cursor: pointer; }
+
+  /* ── PAGE MANAGEMENT ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── NAV (FIXED FOR HOME, STICKY FOR OTHERS) ── */
+  nav.fixed-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(17,17,17,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  nav.sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(17,17,17,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.15em;
+    color: var(--light);
+  }
+  .nav-logo span { color: var(--ember); }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a, .nav-links button {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links button:hover { color: var(--light); }
+  .nav-back {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 2rem 100px;
+    position: relative;
+    overflow: hidden;
+    background: #0a0a0a;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,26,10,0.35) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(139,26,10,0.1) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.018) 60px, rgba(255,255,255,0.018) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.018) 60px, rgba(255,255,255,0.018) 61px);
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .emblem { width: 72px; height: 72px; margin: 0 auto 2.5rem; }
+  .emblem svg, .emblem-sm svg, .emblem-md svg { width: 100%; height: 100%; }
+  .emblem-sm { width: 52px; height: 52px; margin: 0 auto 2rem; }
+  .emblem-md { width: 56px; height: 56px; margin: 0 auto 2rem; }
+  .hero-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.45em;
+    font-size: 12px;
+    color: var(--ember);
+    margin-bottom: 1.25rem;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 16vw, 148px);
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    margin-bottom: 1rem;
+  }
+  .hero-subtitle {
+    font-size: clamp(20px, 5vw, 48px);
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+    font-style: italic;
+  }
+  .hero-description {
+    max-width: 600px;
+    font-size: 19px;
+    line-height: 1.8;
+    color: var(--faint);
+    margin-bottom: 3rem;
+  }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    border: 1px solid var(--ember);
+    color: var(--light);
+    transition: all 0.3s;
+    margin: 0.5rem;
+  }
+  .btn:hover {
+    background: var(--ember);
+    color: var(--light);
+  }
+  .btn-secondary {
+    border-color: rgba(245,240,232,0.2);
+    color: var(--muted);
+  }
+  .btn-secondary:hover {
+    background: rgba(245,240,232,0.08);
+    border-color: var(--light);
+    color: var(--light);
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 80px 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 10vw, 80px);
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    margin-bottom: 1rem;
+  }
+  .section-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--ember);
+    margin-bottom: 1rem;
+  }
+  .divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ember), transparent);
+    margin: 2rem auto;
+  }
+
+  /* ── JOIN/CONTACT PAGES CARD ── */
+  .page-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 2rem 80px;
+  }
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(139,26,10,0.22) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.016) 60px, rgba(255,255,255,0.016) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.016) 60px, rgba(255,255,255,0.016) 61px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .card {
+    position: relative;
+    z-index: 2;
+    background: var(--ash);
+    border: 1px solid rgba(192,57,43,0.25);
+    padding: 3.5rem 3rem;
+    max-width: 520px;
+    width: 100%;
+    animation: fadeUp 0.8s ease both;
+  }
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── JOIN PAGE SPECIFICS ── */
+  .instruction {
+    font-size: 19px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  .text-box {
+    background: rgba(192,57,43,0.08);
+    border: 1px solid rgba(192,57,43,0.35);
+    padding: 1.75rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .text-step {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--ember);
+    margin-bottom: 0.5rem;
+  }
+  .step-text {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  /* ── CALENDAR PAGE ── */
+  .page-header {
+    padding: 60px 2rem 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .admin-toggle-btn {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    padding: 0.6rem 1.5rem;
+    border: 1px solid rgba(245,240,232,0.2);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .admin-toggle-btn:hover { border-color: var(--ember); color: var(--light); }
+  .admin-toggle-btn.active { background: var(--ember); border-color: var(--ember); color: var(--light); }
+  
+  .admin-panel {
+    display: none;
+    background: var(--ash);
+    border: 1px solid rgba(192,57,43,0.25);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    gap: 1.5rem;
+  }
+  .admin-panel.active { display: grid; grid-template-columns: 1fr 1fr; }
+  .admin-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .admin-field label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+  .admin-field input, .admin-field textarea {
+    background: var(--smoke);
+    border: 1px solid rgba(245,240,232,0.1);
+    color: var(--light);
+    padding: 0.75rem;
+    font-family: inherit;
+  }
+
+  .calendar {
+    background: var(--ash);
+    border: 1px solid rgba(192,57,43,0.25);
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .event {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(245,240,232,0.05);
+  }
+  .event:last-child { border-bottom: none; }
+  .event-date {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--ember);
+    min-width: 100px;
+  }
+  .event-details h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    margin-bottom: 0.25rem;
+  }
+  .event-time {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* ── CONTACT FORM ── */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  .form-group label {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.85rem;
+    background: var(--smoke);
+    border: 1px solid rgba(245,240,232,0.1);
+    color: var(--light);
+    font-family: inherit;
+    font-size: 16px;
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--ember);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; gap: 0; }
+    .nav-hamburger { display: flex; }
+    .nav-mobile { display: none; }
+    .nav-mobile.open { display: flex; }
+    .page-header { flex-direction: column; }
+    .admin-panel.active { grid-template-columns: 1fr; }
+    section { padding: 60px 1.5rem; }
+    .card { padding: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════ HOME PAGE ════════════════════════════════════════ -->
+<div id="home" class="page active">
+  <nav class="fixed-nav">
+    <button class="nav-logo"><span>⚒</span> IRON</button>
+    <ul class="nav-links">
+      <li><button onclick="navigate('join')">JOIN</button></li>
+      <li><button onclick="navigate('calendar')">CALENDAR</button></li>
+      <li><button onclick="navigate('contact')">CONTACT</button></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-mobile" id="nav-mobile">
+      <li><button onclick="navigate('join')">JOIN</button></li>
+      <li><button onclick="navigate('calendar')">CALENDAR</button></li>
+      <li><button onclick="navigate('contact')">CONTACT</button></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="emblem">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 10 L90 30 L85 75 L50 90 L15 75 L10 30 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <p class="hero-eyebrow">WEEKLY COMMUNITY</p>
+      <h1 class="hero-title">IRON<br>BROTHERHOOD</h1>
+      <p class="hero-subtitle">Workout & Devotion</p>
+      <p class="hero-description">
+        Join a community of men committed to building strength—physically and spiritually.
+        Meet weekly for fellowship, training, and meaningful conversation grounded in faith.
+      </p>
+      <button class="btn" onclick="navigate('join')">JOIN US</button>
+      <button class="btn btn-secondary" onclick="navigate('calendar')">VIEW CALENDAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ JOIN PAGE ════════════════════════════════════════ -->
+<div id="join" class="page">
+  <nav class="sticky-nav">
+    <button class="nav-logo" onclick="navigate('home')"><span>⚒</span> IRON</button>
+    <button class="nav-back" onclick="navigate('home')">← BACK HOME</button>
+  </nav>
+
+  <div class="bg-glow"></div>
+  <div class="bg-grid"></div>
+
+  <div class="page-container">
+    <div class="card">
+      <div class="emblem-md">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 10 L90 30 L85 75 L50 90 L15 75 L10 30 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <p class="section-eyebrow">GET INVOLVED</p>
+      <h2 class="section-title">Join the Brotherhood</h2>
+      <div class="divider"></div>
+      <p class="instruction">Take your next step by joining our community:</p>
+
+      <div class="text-box">
+        <p class="text-step">STEP 1: GroupMe Chat</p>
+        <p class="step-text">Join our group chat for daily updates, encouragement, and community announcements.</p>
+      </div>
+      <a href="https://web.groupme.com/join_group/your_groupme_id" class="btn" style="display: block; text-align: center; margin-bottom: 1rem;">JOIN GROUPME</a>
+
+      <div class="text-box">
+        <p class="text-step">STEP 2: Strava Training Group</p>
+        <p class="step-text">Track your workouts with our Strava community and share your progress with the brotherhood.</p>
+      </div>
+      <a href="https://www.strava.com/clubs/2152589" class="btn" style="display: block; text-align: center;">JOIN STRAVA</a>
+
+      <div class="divider"></div>
+      <p style="text-align: center; color: var(--muted); margin-top: 2rem; font-size: 14px;">
+        Questions? <button onclick="navigate('contact')" style="color: var(--ember); text-decoration: underline;">Contact us</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ CALENDAR PAGE ════════════════════════════════════════ -->
+<div id="calendar" class="page">
+  <nav class="sticky-nav">
+    <button class="nav-logo" onclick="navigate('home')"><span>⚒</span> IRON</button>
+    <button class="nav-back" onclick="navigate('home')">← BACK HOME</button>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-text">
+      <p class="section-eyebrow">SCHEDULE</p>
+      <h2 class="section-title">Weekly Calendar</h2>
+    </div>
+    <button class="admin-toggle-btn" id="adminToggle" onclick="toggleAdmin()">ADMIN MODE</button>
+  </div>
+
+  <div style="max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2;">
+    <div class="admin-panel" id="adminPanel">
+      <div class="admin-field">
+        <label>Date</label>
+        <input type="date" id="eventDate">
+      </div>
+      <div class="admin-field">
+        <label>Time</label>
+        <input type="time" id="eventTime">
+      </div>
+      <div class="admin-field">
+        <label>Title</label>
+        <input type="text" id="eventTitle" placeholder="Workout Title">
+      </div>
+      <div class="admin-field">
+        <label>Location</label>
+        <input type="text" id="eventLocation" placeholder="Location">
+      </div>
+      <div class="admin-field">
+        <label>Description</label>
+        <textarea id="eventDescription" placeholder="Event details..."></textarea>
+      </div>
+      <button class="btn" style="grid-column: 1 / -1;" onclick="addEvent()">ADD EVENT</button>
+    </div>
+
+    <div class="calendar" id="calendar-list">
+      <div class="event">
+        <p class="event-date">SAT, JUN 7</p>
+        <div class="event-details">
+          <h4>Barbell Training</h4>
+          <p class="event-time">6:00 AM – Iron Gymnasium</p>
+        </div>
+      </div>
+      <div class="event">
+        <p class="event-date">SUN, JUN 8</p>
+        <div class="event-details">
+          <h4>Fellowship & Devotion</h4>
+          <p class="event-time">5:30 PM – Community Center</p>
+        </div>
+      </div>
+      <div class="event">
+        <p class="event-date">WED, JUN 11</p>
+        <div class="event-details">
+          <h4>CrossFit WOD</h4>
+          <p class="event-time">7:00 AM – Box Training</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ CONTACT PAGE ════════════════════════════════════════ -->
+<div id="contact" class="page">
+  <nav class="sticky-nav">
+    <button class="nav-logo" onclick="navigate('home')"><span>⚒</span> IRON</button>
+    <button class="nav-back" onclick="navigate('home')">← BACK HOME</button>
+  </nav>
+
+  <div class="bg-glow"></div>
+  <div class="bg-grid"></div>
+
+  <div class="page-container">
+    <div class="card">
+      <div class="emblem-md">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 10 L90 30 L85 75 L50 90 L15 75 L10 30 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <p class="section-eyebrow">GET IN TOUCH</p>
+      <h2 class="section-title">Ask a Question</h2>
+      <div class="divider"></div>
+
+      <form id="contactForm" onsubmit="submitContact(event)">
+        <div class="form-group">
+          <label for="name">YOUR NAME</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">EMAIL ADDRESS</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">MESSAGE</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn" style="width: 100%; text-align: center;">SEND MESSAGE</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── PAGE NAVIGATION ──
+  function navigate(pageId) {
+    // Hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // Show target page
+    document.getElementById(pageId).classList.add('active');
+    // Close mobile menu
+    closeMobileMenu();
+    // Scroll to top
+    window.scrollTo(0, 0);
+  }
+
+  // ── MOBILE MENU ──
+  function toggleMobileMenu() {
+    const menu = document.getElementById('nav-mobile');
+    const hamburger = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    hamburger.classList.toggle('active');
+  }
+
+  function closeMobileMenu() {
+    const menu = document.getElementById('nav-mobile');
+    const hamburger = document.getElementById('hamburger');
+    menu.classList.remove('open');
+    hamburger.classList.remove('active');
+  }
+
+  // ── CALENDAR ADMIN ──
+  let events = [
+    { date: '2026-06-07', time: '06:00', title: 'Barbell Training', location: 'Iron Gymnasium' },
+    { date: '2026-06-08', time: '17:30', title: 'Fellowship & Devotion', location: 'Community Center' },
+    { date: '2026-06-11', time: '07:00', title: 'CrossFit WOD', location: 'Box Training' }
+  ];
+
+  function toggleAdmin() {
+    const btn = document.getElementById('adminToggle');
+    const panel = document.getElementById('adminPanel');
+    btn.classList.toggle('active');
+    panel.classList.toggle('active');
+  }
+
+  function addEvent() {
+    const date = document.getElementById('eventDate').value;
+    const time = document.getElementById('eventTime').value;
+    const title = document.getElementById('eventTitle').value;
+    const location = document.getElementById('eventLocation').value;
+
+    if (!date || !time || !title || !location) {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    events.push({ date, time, title, location });
+    renderEvents();
+
+    // Clear form
+    document.getElementById('eventDate').value = '';
+    document.getElementById('eventTime').value = '';
+    document.getElementById('eventTitle').value = '';
+    document.getElementById('eventLocation').value = '';
+    document.getElementById('eventDescription').value = '';
+  }
+
+  function renderEvents() {
+    const list = document.getElementById('calendar-list');
+    list.innerHTML = events.map(e => {
+      const d = new Date(e.date);
+      const dateStr = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).toUpperCase();
+      return `
+        <div class="event">
+          <p class="event-date">${dateStr}</p>
+          <div class="event-details">
+            <h4>${e.title}</h4>
+            <p class="event-time">${e.time} – ${e.location}</p>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // ── CONTACT FORM ──
+  function submitContact(event) {
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    // In production, you'd send this to a backend/email service
+    console.log({ name, email, message });
+    alert('Thank you for reaching out! We'll be in touch soon.');
+
+    // Reset form
+    document.getElementById('contactForm').reset();
+  }
+
+  // Initialize
+  renderEvents();
+</script>
+
+</body>
+</html>
