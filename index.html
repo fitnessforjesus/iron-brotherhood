@@ -99,6 +99,7 @@
     color: var(--muted);
     text-decoration: none;
   }
+  .nav-mobile a:hover { color: var(--light); }
 
   /* ── HERO ── */
   .hero {
@@ -107,412 +108,227 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 120px 2rem 100px;
     position: relative;
     overflow: hidden;
-    background: #0a0a0a;
+    padding: 6rem 2rem 4rem;
+    text-align: center;
   }
   .hero-bg {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,26,10,0.35) 0%, transparent 65%),
-      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(139,26,10,0.1) 0%, transparent 60%);
+    background: radial-gradient(ellipse 120% 80% at 50% 50%, rgba(192,57,43,0.08) 0%, transparent 75%);
+    pointer-events: none;
   }
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.018) 60px, rgba(255,255,255,0.018) 61px),
-      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.018) 60px, rgba(255,255,255,0.018) 61px);
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
   }
-  .hero-content { position: relative; z-index: 2; }
-  .emblem {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 2.5rem;
-    animation: fadeIn 1s ease both;
-  }
-  .hero-eyebrow {
+  .eyebrow {
     font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.45em;
     font-size: 12px;
+    letter-spacing: 0.4em;
     color: var(--ember);
-    margin-bottom: 1.25rem;
-    animation: fadeIn 1s ease 0.1s both;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
   }
-  .hero-title {
+  .hero h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(80px, 16vw, 148px);
-    line-height: 0.88;
-    letter-spacing: 0.02em;
-    animation: fadeUp 1s ease 0.2s both;
+    font-size: clamp(52px, 12vw, 140px);
+    line-height: 1.0;
+    letter-spacing: 0.04em;
+    margin-bottom: 2rem;
   }
-  .hero-title .outline {
-    -webkit-text-stroke: 1.5px rgba(245,240,232,0.35);
-    color: transparent;
-    display: block;
-    font-size: clamp(54px, 10vw, 96px);
-  }
-  .hero-rule {
-    width: 100px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--ember), transparent);
-    margin: 2rem auto;
-    animation: expandWidth 1s ease 0.5s both;
-  }
-  .hero-sub {
-    font-size: clamp(18px, 2.5vw, 22px);
-    font-style: italic;
+  .hero h1 .br { display: block; }
+  .hero-subtext {
+    font-size: 22px;
     color: var(--muted);
-    max-width: 460px;
-    margin: 0 auto 2rem;
-    line-height: 1.65;
-    animation: fadeIn 1s ease 0.6s both;
-  }
-  .hero-verse {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.25em;
-    color: var(--gold);
-    animation: fadeIn 1s ease 0.7s both;
+    line-height: 1.8;
+    max-width: 680px;
+    margin: 0 auto 3rem;
   }
   .hero-cta {
-    margin-top: 2.5rem;
-    animation: fadeIn 1s ease 0.85s both;
-  }
-  .btn-primary {
-    display: inline-block;
-    padding: 0.9rem 2.8rem;
-    background: var(--ember);
-    color: var(--light);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 0.2em;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-    border: none;
-    cursor: pointer;
-  }
-  .btn-primary:hover { background: var(--forge); transform: translateY(-2px); }
-  .btn-outline {
-    display: inline-block;
-    padding: 0.9rem 2.8rem;
-    border: 1px solid rgba(245,240,232,0.25);
-    color: var(--muted);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 0.2em;
-    text-decoration: none;
-    transition: border-color 0.2s, color 0.2s, transform 0.15s;
-    margin-left: 1rem;
-  }
-  .btn-outline:hover { border-color: var(--light); color: var(--light); transform: translateY(-2px); }
-  .scroll-indicator {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    animation: fadeIn 1.5s ease 1.2s both;
-  }
-  .scroll-indicator span {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    color: var(--faint);
-  }
-  .scroll-line {
-    width: 1px;
-    height: 48px;
-    background: linear-gradient(180deg, transparent, var(--faint));
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-
-  /* ── ABOUT ── */
-  #about {
-    padding: 100px 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .section-label {
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 0.35em;
-    font-size: 11px;
-    color: var(--ember);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--red-line);
-  }
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(40px, 7vw, 64px);
-    line-height: 1;
-    letter-spacing: 0.03em;
-    margin-bottom: 1.5rem;
-  }
-  .about-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-    margin-top: 2rem;
-  }
-  .about-text {
-    font-size: 19px;
-    line-height: 1.8;
-    color: var(--muted);
-  }
-  .about-text p + p { margin-top: 1.25rem; }
-  .pillars-grid {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     gap: 1.5rem;
   }
-  .pillar {
-    display: flex;
-    gap: 1.25rem;
-    align-items: flex-start;
-  }
-  .pillar-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    color: var(--ember);
-    line-height: 1;
-    opacity: 0.5;
-    flex-shrink: 0;
-    width: 32px;
-  }
-  .pillar-content {}
-  .pillar-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 0.1em;
-    color: var(--light);
-    margin-bottom: 0.35rem;
-  }
-  .pillar-text {
-    font-size: 16px;
-    color: var(--muted);
-  }
-
-  /* ── JOIN ── */
-  #join {
-    padding: 100px 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .join-content {
-    background: var(--ash);
-    border: 1px solid var(--red-line);
-    padding: 3rem;
-  }
-  .join-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(36px, 8vw, 56px);
-    letter-spacing: 0.05em;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-  }
-  .join-subtitle {
-    font-size: 18px;
-    color: var(--muted);
-    margin-bottom: 2.5rem;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .join-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-  }
-  .join-btn {
-    display: inline-block;
-    padding: 1rem 2.5rem;
-    background: var(--ember);
-    color: var(--light);
+  .btn {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 16px;
     letter-spacing: 0.15em;
-    text-decoration: none;
-    transition: all 0.2s;
+    padding: 0.9rem 2.5rem;
     border: none;
     cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
   }
-  .join-btn:hover {
-    background: var(--forge);
-    transform: translateY(-2px);
+  .btn-primary {
+    background: var(--ember);
+    color: var(--light);
   }
+  .btn-primary:hover { background: var(--forge); transform: translateY(-2px); }
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(245,240,232,0.3);
+    color: var(--light);
+  }
+  .btn-secondary:hover { border-color: var(--light); }
 
-  /* ── FOOTER ── */
-  footer {
-    padding: 3rem 2rem;
-    background: var(--ash);
-    border-top: 1px solid rgba(255,255,255,0.05);
+  /* ── SECTIONS ── */
+  .section {
+    padding: 80px 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 64px);
+    letter-spacing: 0.03em;
+    margin-bottom: 3rem;
     text-align: center;
   }
-  .footer-text {
-    font-size: 14px;
+  .section-content {
+    font-size: 18px;
+    line-height: 1.8;
     color: var(--muted);
+  }
+  .section-content a {
+    color: var(--ember);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .section-content a:hover { color: var(--light); }
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(192,57,43,0.5), transparent);
+    margin: 60px 0;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .grid-item {
+    background: rgba(192,57,43,0.05);
+    border: 1px solid rgba(192,57,43,0.25);
+    padding: 2rem;
+  }
+  .grid-item h3 {
     font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
     letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    color: var(--light);
+  }
+  .grid-item p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
   }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes expandWidth {
-    from { width: 0; }
-    to { width: 100px; }
-  }
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
-  }
-
-  /* ── RESPONSIVE ── */
+  /* ── MOBILE ── */
   @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-logo { font-size: 18px; }
+    nav { padding: 1.25rem 1.5rem; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
-    .hero { padding: 80px 1.5rem 60px; }
-    .hero-title { font-size: clamp(48px, 12vw, 80px); }
-    .hero-title .outline { font-size: clamp(32px, 8vw, 54px); }
-    .btn-outline { margin-left: 0; margin-top: 1rem; }
-    .about-layout { grid-template-columns: 1fr; gap: 2rem; }
-    #about { padding: 60px 1.5rem; }
-    #join { padding: 60px 1.5rem; }
-    .join-content { padding: 2rem; }
-    .join-buttons { flex-direction: column; }
-    .join-btn { width: 100%; }
+    .hero-cta {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .btn { width: 100%; text-align: center; }
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">IRON <span>BROTHERHOOD</span></a>
+  <a href="index.html" class="nav-logo">Iron <span>Brotherhood</span></a>
   <ul class="nav-links">
-    <li><a href="#about">ABOUT</a></li>
-    <li><a href="#join">JOIN</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="calendar.html">Calendar</a></li>
+    <li><a href="join.html">Join</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
-  <button class="nav-hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
+  <button class="nav-hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
   </button>
 </nav>
+
 <ul class="nav-mobile" id="navMobile">
-  <li><a href="#about" onclick="toggleMenu()">ABOUT</a></li>
-  <li><a href="#join" onclick="toggleMenu()">JOIN</a></li>
+  <li><a href="#about">About</a></li>
+  <li><a href="calendar.html">Calendar</a></li>
+  <li><a href="join.html">Join</a></li>
+  <li><a href="contact.html">Contact</a></li>
 </ul>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
   <div class="hero-content">
-    <svg class="emblem" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
-      <path d="M50 20L65 35L65 65C65 75 58 85 50 90C42 85 35 75 35 65L35 35Z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
-      <circle cx="50" cy="35" r="4" fill="currentColor"/>
-    </svg>
-    <p class="hero-eyebrow">WEEKLY WORKOUT & DEVOTION</p>
-    <h1 class="hero-title">
-      IRON
-      <span class="outline">IRON</span>
-    </h1>
-    <div class="hero-rule"></div>
-    <p class="hero-sub">Strengthen your body and spirit with brothers in Christ through intentional fitness and faith</p>
-    <p class="hero-verse">2 Timothy 2:2</p>
+    <p class="eyebrow">The Brotherhood</p>
+    <h1>Iron <span class="br">Brotherhood</span></h1>
+    <p class="hero-subtext">A weekly gathering of men dedicated to fitness, faith, and fellowship. Show up. Get strong. Build bonds that last.</p>
     <div class="hero-cta">
-      <a href="#join" class="btn-primary">GET STARTED</a>
-      <a href="#about" class="btn-outline">LEARN MORE</a>
-    </div>
-  </div>
-  <div class="scroll-indicator">
-    <span>SCROLL</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label">WHAT WE DO</div>
-  <h2 class="section-title">Our Mission</h2>
-  <div class="about-layout">
-    <div class="about-text">
-      <p>Iron Brotherhood is more than a fitness group—it's a community of men committed to building strength in both body and faith. We gather weekly for structured workouts combined with biblical reflection and brotherhood.</p>
-      <p>Our vision is to create spaces where men can challenge themselves physically, grow spiritually, and develop meaningful friendships rooted in Christ.</p>
-    </div>
-    <div class="pillars-grid">
-      <div class="pillar">
-        <div class="pillar-num">1</div>
-        <div class="pillar-content">
-          <h3 class="pillar-title">STRENGTH</h3>
-          <p class="pillar-text">Physical training that pushes limits and builds resilience</p>
-        </div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-num">2</div>
-        <div class="pillar-content">
-          <h3 class="pillar-title">FAITH</h3>
-          <p class="pillar-text">Devotional moments connecting Scripture to daily life</p>
-        </div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-num">3</div>
-        <div class="pillar-content">
-          <h3 class="pillar-title">BROTHERHOOD</h3>
-          <p class="pillar-text">Deep friendships forged through accountability and support</p>
-        </div>
-      </div>
+      <a href="calendar.html" class="btn btn-primary">View Schedule</a>
+      <a href="join.html" class="btn btn-secondary">Join Us</a>
     </div>
   </div>
 </section>
 
-<!-- JOIN -->
-<section id="join">
-  <div class="join-content">
-    <h2 class="join-title">Ready to Join the Brotherhood?</h2>
-    <p class="join-subtitle">Connect with us through our community platforms and start your journey today</p>
-    <div class="join-buttons">
-      <a href="https://groupme.com/join_group/115033338/bO8r9Nru" target="_blank" class="join-btn">💬 GroupMe Chat</a>
-      <a href="https://www.strava.com/clubs/2152589" target="_blank" class="join-btn">🏃 Strava Club</a>
+<div class="divider"></div>
+
+<section class="section" id="about">
+  <h2>What We're About</h2>
+  <div class="section-content">
+    <p style="margin-bottom: 1.5rem;">Iron Brotherhood is more than a workout group. We're a community of men committed to growth—physical, spiritual, and relational. Every week, we gather to lift heavy, pray hard, and build the kind of friendships that matter.</p>
+    <p>We believe that strength isn't built alone. Whether you're new to fitness or a seasoned lifter, there's a place for you here.</p>
+  </div>
+  <div class="grid">
+    <div class="grid-item">
+      <h3>💪 Fitness</h3>
+      <p>Structured workouts designed to challenge every level. From strength training to conditioning, we push ourselves to be better.</p>
+    </div>
+    <div class="grid-item">
+      <h3>✝️ Faith</h3>
+      <p>We incorporate devotional moments into our gatherings—taking time to pray, reflect, and encourage one another spiritually.</p>
+    </div>
+    <div class="grid-item">
+      <h3>🤝 Brotherhood</h3>
+      <p>Real relationships. Real accountability. Real community. That's what Iron Brotherhood is built on.</p>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <p class="footer-text">© 2025 IRON BROTHERHOOD. FORGED IN FAITH. STRONGER TOGETHER.</p>
-</footer>
+<div class="divider"></div>
+
+<section class="section">
+  <h2>Get Started</h2>
+  <div class="section-content" style="text-align: center;">
+    <p style="margin-bottom: 2rem;">Ready to join? Check out our calendar, then jump into the group chat.</p>
+    <div class="hero-cta">
+      <a href="calendar.html" class="btn btn-primary">See Calendar</a>
+      <a href="join.html" class="btn btn-secondary">Join Group Chat</a>
+    </div>
+  </div>
+</section>
 
 <script>
-  function toggleMenu() {
-    const navMobile = document.getElementById('navMobile');
+  const hamburger = document.getElementById('hamburger');
+  const navMobile = document.getElementById('navMobile');
+  
+  hamburger.addEventListener('click', () => {
     navMobile.classList.toggle('open');
-  }
+  });
+  
+  navMobile.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMobile.classList.remove('open');
+    });
+  });
 </script>
 
 </body>
